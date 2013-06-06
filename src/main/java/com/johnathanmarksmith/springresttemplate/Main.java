@@ -1,11 +1,14 @@
 package com.johnathanmarksmith.springresttemplate;
 
 
+import com.johnathanmarksmith.springresttemplate.model.User;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.log4j.Logger;
 import org.springframework.http.client.CommonsClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -44,15 +47,17 @@ public class Main
             setting up data to sent over
          */
         Map<String, String> vars = new HashMap<String, String>();
-        vars.put("name", "Regan");
-
+        vars.put("name", "JohnathanMarkSmith");
 
         /*
             doing the code and displaying the return
          */
         RestTemplate restTemplate = new RestTemplate(commons);
-        String jsonreturn = restTemplate.getForObject("http://127.0.0.1:8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
+        restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-        LOGGER.debug(jsonreturn);
+        User jsonreturn = restTemplate.getForObject("http://127.0.0.1:8080/springmvc-rest-secured-test/json/{name}", User.class, vars);
+
+        LOGGER.debug("return object:  " + jsonreturn.toString());
     }
 }
