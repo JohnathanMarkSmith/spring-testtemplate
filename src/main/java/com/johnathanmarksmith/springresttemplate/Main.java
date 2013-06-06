@@ -2,33 +2,29 @@ package com.johnathanmarksmith.springresttemplate;
 
 
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.web.client.RestTemplate;
+
+import static org.apache.log4j.Logger.getLogger;
+
 
 public class Main
 {
 
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
-
-
-    private RestTemplate restTemplate =null;
-
-
+    private static final Logger LOGGER = getLogger(Main.class);
 
 
     public static void main(String[] args)
     {
-        logger.debug("Starting REST Client!!!!");
+        LOGGER.debug("Starting REST Client!!!!");
 
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("test", "test");
 
 
+        RestTemplate restTemplate = new RestTemplate();
 
-        /*
+        String jsonreturn = restTemplate.getForObject("http://127.0.0.1:8080/springmvc-rest-secured-test/json/Regan", String.class);
 
-            In this example we need to get data from http://127.0.0.1:8080/springmvc-rest-secured-test/json/Regan
-
-         */
+        LOGGER.debug(jsonreturn);
     }
 }
