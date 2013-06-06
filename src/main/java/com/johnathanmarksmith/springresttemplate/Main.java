@@ -51,7 +51,7 @@ public class Main
             doing the code and displaying the return
          */
         RestTemplate restTemplate = new RestTemplate(commons);
-        String jsonreturn = restTemplate.getForObject("http://127.0.0.1:8080/springmvc-rest-secured-test/json/{name}?j_username=test&j_password=test", String.class, vars);
+        String jsonreturn = restTemplate.getForObject("http://127.0.0.1:8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
 
         LOGGER.debug(jsonreturn);
     }
