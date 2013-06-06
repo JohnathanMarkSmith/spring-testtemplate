@@ -31,7 +31,7 @@ public class Main
         HttpClient client = new HttpClient();
 
         UsernamePasswordCredentials credentials =
-                new UsernamePasswordCredentials("test","test");
+                new UsernamePasswordCredentials("test", "test");
 
         client.getState().setCredentials(
                 new AuthScope("127.0.0.1", 8080, AuthScope.ANY_REALM),
