@@ -74,7 +74,7 @@ public class Main
          *
          */
         Map<String, String> vars = new HashMap<String, String>();
-        vars.put("name", "JohnathanMarkSm2ith");
+        vars.put("name", "JohnathanMark2Smith");
 
 
         /**
