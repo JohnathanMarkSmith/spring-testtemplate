@@ -1,36 +1,17 @@
-package com.johnathanmarksmith.springresttemplate;
+###  Spring's Java Configuration (JavaConfig) style with RESTTemplate, Maven,  Log4J
+
+This is a sample Spring Project to show how to use Spring's Java Configuration (JavaConfig) style with RESTTemplate and Log4J.
+
+This example also will show how to use @PropertySource for reading properties and using the Environment Object to add properties to your objects
+
+and how to make secured REST calls using Spring RESTTemplate.
+
+### How to use Spring's Java Configuration (JavaConfig) style and not XML files for configuation
+
+Consider replacing Spring XML configuration with Spring's Java Configuration (JavaConfig) style is the right way to go right now.
 
 
-import com.johnathanmarksmith.springresttemplate.model.RESTServer;
-import com.johnathanmarksmith.springresttemplate.model.User;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.client.CommonsClientHttpRequestFactory;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.apache.log4j.Logger.getLogger;
-
-@PropertySource("classpath:application.properties")
-public class Main
-{
-
-    /**
-     *
-     * Setting up logger
-     *
-     */
-    private static final Logger LOGGER = getLogger(Main.class);
-
+Here is the main code to my sample project
 
     public static void main(String[] args)
     {
@@ -90,4 +71,35 @@ public class Main
 
         LOGGER.debug("return object:  " + jsonreturn.toString());
     }
-}
+
+
+Now lets take a good look at how I setup my bean  with Spring's Java Configuration (JavaConfig) style and not in a XML file.
+
+
+    @Configuration
+    @EnableTransactionManagement
+    @ComponentScan(basePackageClasses = {Main.class})
+    @PropertySource("classpath:application.properties")
+    public class RESTConfiguration
+    {
+
+        @Bean
+        public RESTServer restServer(Environment env)
+        {
+               return new RESTServer(env.getProperty("rest.user"),
+                                      env.getProperty("rest.password"),
+                                      env.getProperty("rest.host"));
+        }
+    }
+
+
+You can see how easy it is to use Spring's Java Configuration (JavaConfig) style and Not XML.. The time of using XML files with Springs is over...
+
+checkout the project from github.
+
+    git clone git@github.com:JohnathanMarkSmith/spring-testemplate.git
+    cd spring-testemplate
+
+This Project is using Java, Spring, Spring RESTTemplate, Maven,  Log4J and Github.
+
+If you have any questions please email me at john@johnathanmarksmith.com
