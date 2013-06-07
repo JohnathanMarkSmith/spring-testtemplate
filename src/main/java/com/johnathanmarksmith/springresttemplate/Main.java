@@ -74,7 +74,7 @@ public class Main
          *
          */
         Map<String, String> vars = new HashMap<String, String>();
-        vars.put("name", "JohnathanMarkSmith");
+        vars.put("name", "JohnathanMarkSm2ith");
 
 
         /**
@@ -86,8 +86,15 @@ public class Main
         restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-        User jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", User.class, vars);
+        try
+        {
+            User jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", User.class, vars);
+            LOGGER.debug("return object:  " + jsonreturn.toString());
+        }
+        catch(Exception e)
+        {
+            LOGGER.error("error:  " + e.toString());
+        }
 
-        LOGGER.debug("return object:  " + jsonreturn.toString());
     }
 }
