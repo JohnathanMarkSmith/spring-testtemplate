@@ -2,7 +2,6 @@ package com.johnathanmarksmith.springresttemplate;
 
 
 import com.johnathanmarksmith.springresttemplate.model.RESTServer;
-import com.johnathanmarksmith.springresttemplate.model.User;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.client.CommonsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -88,12 +88,12 @@ public class Main
 
         try
         {
-            User jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", User.class, vars);
+            String jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
             LOGGER.debug("return object:  " + jsonreturn.toString());
         }
-        catch(Exception e)
+        catch(HttpClientErrorException e)
         {
-            LOGGER.error("error:  " + e.toString());
+            LOGGER.error("error:  " + e.getResponseBodyAsString());
         }
 
     }
