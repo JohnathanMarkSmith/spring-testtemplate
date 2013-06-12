@@ -16,6 +16,11 @@ public class ErrorHolder
 
     public String errorMessage;
 
+
+    public ErrorHolder()
+    {
+    }
+
     public ErrorHolder(String errorMessage)
     {
         this.errorMessage = errorMessage;
