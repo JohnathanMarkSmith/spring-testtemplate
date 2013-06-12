@@ -8,13 +8,11 @@
         </layout>
     </appender>
 
-<!--
-    <logger name="com.johnathanmarksmith">
-        <level value="trace"/>
-    </logger>
--->
-
-
+    <!--
+        <logger name="com.johnathanmarksmith">
+            <level value="trace"/>
+        </logger>
+    -->
 
 
     <root>

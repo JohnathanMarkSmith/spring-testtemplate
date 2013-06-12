@@ -6,9 +6,9 @@ package com.johnathanmarksmith.springresttemplate.model;
  * Email:  john@johnathanmarksmith.com
  * <p/>
  * Comments:
- *
- *    This bean is used to hold the user name, password and host which we need to make the
- *    call to the REST service.
+ * <p/>
+ * This bean is used to hold the user name, password and host which we need to make the
+ * call to the REST service.
  */
 
 public class RESTServer

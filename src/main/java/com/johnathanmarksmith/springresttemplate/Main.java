@@ -1,11 +1,13 @@
 package com.johnathanmarksmith.springresttemplate;
 
 
+import com.johnathanmarksmith.springresttemplate.Error.ErrorHolder;
 import com.johnathanmarksmith.springresttemplate.model.RESTServer;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
@@ -15,6 +17,7 @@ import org.springframework.http.converter.json.MappingJacksonHttpMessageConverte
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,14 +28,12 @@ public class Main
 {
 
     /**
-     *
      * Setting up logger
-     *
      */
     private static final Logger LOGGER = getLogger(Main.class);
 
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         LOGGER.debug("Starting REST Client!!!!");
 
@@ -58,7 +59,7 @@ public class Main
          *
          */
         HttpClient client = new HttpClient();
-                UsernamePasswordCredentials credentials =
+        UsernamePasswordCredentials credentials =
                 new UsernamePasswordCredentials(mRESTServer.getUser(), mRESTServer.getPassword());
 
         client.getState().setCredentials(
@@ -74,7 +75,7 @@ public class Main
          *
          */
         Map<String, String> vars = new HashMap<String, String>();
-        vars.put("name", "JohnathanMark2Smith");
+        vars.put("name", "JohnathanMarkSmith");
 
 
         /**
@@ -90,11 +91,23 @@ public class Main
         {
             String jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
             LOGGER.debug("return object:  " + jsonreturn.toString());
-        }
-        catch(HttpClientErrorException e)
+        } catch (HttpClientErrorException e)
         {
+            /**
+             *
+             * If we get a HTTP Exception display the error message
+             */
+
             LOGGER.error("error:  " + e.getResponseBodyAsString());
+
+            ObjectMapper mapper = new ObjectMapper();
+            ErrorHolder eh = mapper.readValue(e.getResponseBodyAsString(), ErrorHolder.class);
+
+            LOGGER.error("error:  " + eh.errorMessage);
+
         }
 
     }
+
+
 }
