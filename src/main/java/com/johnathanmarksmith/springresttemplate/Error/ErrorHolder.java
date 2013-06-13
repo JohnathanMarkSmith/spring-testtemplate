@@ -1,5 +1,8 @@
 package com.johnathanmarksmith.springresttemplate.Error;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 /**
  * Date:   6/12/13 / 10:03 AM
  * Author: Johnathan Mark Smith
@@ -14,14 +17,14 @@ public class ErrorHolder
 {
 
 
-    public String errorMessage;
-
+    private String errorMessage;
 
     public ErrorHolder()
     {
     }
 
-    public ErrorHolder(String errorMessage)
+    @JsonCreator
+    public ErrorHolder(@JsonProperty("errorMessage") String errorMessage)
     {
         this.errorMessage = errorMessage;
     }

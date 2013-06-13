@@ -75,7 +75,7 @@ public class Main
          *
          */
         Map<String, String> vars = new HashMap<String, String>();
-        vars.put("name", "JohnathanMar22kSmith");
+        vars.put("name", "JohnathanMar6kSmith");
 
 
         /**
@@ -103,7 +103,7 @@ public class Main
             ObjectMapper mapper = new ObjectMapper();
             ErrorHolder eh = mapper.readValue(e.getResponseBodyAsString(), ErrorHolder.class);
 
-            LOGGER.error("error:  " + eh.errorMessage);
+            LOGGER.error("error:  " + eh.getErrorMessage());
 
         }
 
