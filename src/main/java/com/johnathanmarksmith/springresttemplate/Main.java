@@ -3,6 +3,7 @@ package com.johnathanmarksmith.springresttemplate;
 
 import com.johnathanmarksmith.springresttemplate.Error.ErrorHolder;
 import com.johnathanmarksmith.springresttemplate.model.RESTServer;
+import com.johnathanmarksmith.springresttemplate.model.User;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -75,7 +76,7 @@ public class Main
          *
          */
         Map<String, String> vars = new HashMap<String, String>();
-        vars.put("name", "JohnathanMar6kSmith");
+        vars.put("name", "JohnathanMarkSmith");
 
 
         /**
@@ -91,6 +92,12 @@ public class Main
         {
             String jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
             LOGGER.debug("return object:  " + jsonreturn.toString());
+
+            ObjectMapper mapper = new ObjectMapper();
+            User u = mapper.readValue(jsonreturn.toString(), User.class);
+
+            LOGGER.debug("User:  " + u.toString());
+
         } catch (HttpClientErrorException e)
         {
             /**
