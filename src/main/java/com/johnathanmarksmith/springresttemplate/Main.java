@@ -19,6 +19,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,26 +80,57 @@ public class Main
         vars.put("name", "JohnathanMarkSmith");
 
 
+
+
         /**
          *
          * Doing the REST call and then displaying the data/user object
          *
          */
-        RestTemplate restTemplate = new RestTemplate(commons);
-        restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
 
         try
         {
-            String jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
-            LOGGER.debug("return object:  " + jsonreturn.toString());
+           /*
 
-            ObjectMapper mapper = new ObjectMapper();
-            User u = mapper.readValue(jsonreturn.toString(), User.class);
+                This was code to return a user real name
+
+                RestTemplate restTemplate = new RestTemplate(commons);
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+                String jsonreturn = restTemplate.getForObject("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/json/{name}", String.class, vars);
+                LOGGER.debug("return object:  " + jsonreturn.toString());
+
+                ObjectMapper mapper = new ObjectMapper();
+                User u = mapper.readValue(jsonreturn.toString(), User.class);
+
+            */
+
+
+            /*
+
+                This is code to post and return a user object
+
+             */
+
+            RestTemplate rt = new RestTemplate();
+            rt.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+            rt.getMessageConverters().add(new StringHttpMessageConverter());
+
+            URI uri = new URI("http://" + mRESTServer.getHost() + ":8080/springmvc-rest-secured-test/api/JMM");
+
+            User u = new User();
+            u.setName("Johnathan M Smith");
+            u.setUser("JMS");
+
+
+            User returns = rt.postForObject(uri, u, User.class);
 
             LOGGER.debug("User:  " + u.toString());
 
-        } catch (HttpClientErrorException e)
+        }
+        catch (HttpClientErrorException e)
         {
             /**
              *
@@ -113,8 +145,11 @@ public class Main
             LOGGER.error("error:  " + eh.getErrorMessage());
 
         }
+        catch(Exception e)
+        {
+            LOGGER.error("error:  " + e.getMessage());
 
+        }
     }
-
 
 }
